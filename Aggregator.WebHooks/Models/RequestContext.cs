@@ -57,7 +57,7 @@ namespace Aggregator.Models
         {
             get
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("Cannot emulate IVssRequestContext in remote web service");
             }
         }
 
