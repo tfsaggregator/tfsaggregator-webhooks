@@ -1,3 +1,4 @@
+![Build badge](https://tfsaggregator.visualstudio.com/_apis/public/build/definitions/2e747373-c780-4b2c-823d-98a3fd2b4e99/9/badge)
 
 This is an alternative version of TFS Aggregator that supports [Visual Studio Team Services (VSTS)](https://www.visualstudio.com/team-services/).
 It can be used on premises also, starting from TFS 2015: you have to provide the hosting environment.
