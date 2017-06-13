@@ -75,11 +75,11 @@
 #if TFS2017
                 var tfsCred = new VssCredentials(
                     new VssBasicCredential(
-                        new System.Net.NetworkCredential(this.username, this.username)));
+                        new System.Net.NetworkCredential(this.username, this.password)));
 #else
                 var tfsCred = new TfsClientCredentials(
                     new BasicAuthCredential(
-                        new System.Net.NetworkCredential(this.username, this.username)));
+                        new System.Net.NetworkCredential(this.username, this.password)));
                 tfsCred.AllowInteractive = false;
 #endif
                 return new TfsTeamProjectCollection(tfsCollectionUri, tfsCred);
