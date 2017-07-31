@@ -21,12 +21,11 @@ namespace Aggregator.WebHooks.Controllers
         public HttpResponseMessage Get()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new StringContent($"Hello from TFSAggregator2webHooks @{Environment.MachineName}");
+            response.Content = new StringContent($"Hello from TFS Aggregator Web Service, running on {Environment.MachineName}");
             return response;
         }
 
         // TODO async
-	    [IdentityBasicAuthentication] // Enable authentication via an ASP.NET Identity user name and password
 	    [Authorize] // Require some form of authentication
         public HttpResponseMessage Post([FromBody]JObject payload)
         {

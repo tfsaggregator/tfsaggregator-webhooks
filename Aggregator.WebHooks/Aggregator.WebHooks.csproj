@@ -117,6 +117,7 @@
     <Compile Include="Utils\FileEventLogger.cs" />
     <Compile Include="Utils\DiagnosticTraceLogger.cs" />
     <Compile Include="Utils\FileTextLogger.cs" />
+    <Compile Include="Utils\ILogEvents2.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
