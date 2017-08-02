@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <TfsVersion Condition="'TfsVersion' == ''">17.2</TfsVersion>
+    <TfsVersion Condition="'TfsVersion' == ''">15.2</TfsVersion>
     <HintPackageDir>$(SolutionDir)\packages</HintPackageDir>
         <DefineConstants Condition="'$(TfsVersion)' == '15.2'">$(DefineConstants);TFS2017u2;TFS2017;TFS2015u2;TFS2015u1;TFS2015</DefineConstants>
         <ServerAssemblies Condition="'$(TfsInstallationDirectory)'!=''">$(TfsInstallationDirectory)\Application Tier\Web Services\bin</ServerAssemblies>
@@ -185,11 +185,15 @@
             <HintPath>$(HintPackageDir)\Microsoft.TeamFoundationServer.Client.15.112.1\lib\net45\Microsoft.TeamFoundation.WorkItemTracking.WebApi.dll</HintPath>
             <Private>True</Private>
           </Reference>
-          <!--
           <Reference Include="Microsoft.VisualStudio.Services.Client, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
             <HintPath>$(HintPackageDir)\Microsoft.VisualStudio.Services.InteractiveClient.15.112.1\lib\net45\Microsoft.VisualStudio.Services.Client.dll</HintPath>
             <Private>True</Private>
           </Reference>
+        <Reference Include="Microsoft.VisualStudio.Services.Client.Interactive, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <HintPath>$(HintPackageDir)\Microsoft.VisualStudio.Services.InteractiveClient.15.112.1\lib\net45\Microsoft.VisualStudio.Services.Client.Interactive.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <!--
           -->
           <Reference Include="Microsoft.VisualStudio.Services.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
             <HintPath>$(HintPackageDir)\Microsoft.VisualStudio.Services.Client.15.112.1\lib\net45\Microsoft.VisualStudio.Services.Common.dll</HintPath>
@@ -213,7 +217,7 @@
           </Reference>
         </ItemGroup>
 
-  <Import Project="$(HintPackageDir)\Microsoft.TeamFoundationServer.ExtendedClient.15.112.1\build\Microsoft.TeamFoundationServer.ExtendedClient.targets" Condition="('$(TfsVersion)' == '15.2') and Exists('$(HintPackageDir)\Microsoft.TeamFoundationServer.ExtendedClient.15.112.1-preview\build\Microsoft.TeamFoundationServer.ExtendedClient.targets')" />
+  <Import Project="$(HintPackageDir)\Microsoft.TeamFoundationServer.ExtendedClient.15.112.1\build\Microsoft.TeamFoundationServer.ExtendedClient.targets" Condition="('$(TfsVersion)' == '15.2') and Exists('$(HintPackageDir)\Microsoft.TeamFoundationServer.ExtendedClient.15.112.1\build\Microsoft.TeamFoundationServer.ExtendedClient.targets')" />
 
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(TfsVersion)' == '15.2'">
     <PropertyGroup>
