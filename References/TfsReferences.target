@@ -29,6 +29,12 @@
         <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.Server.DataServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
           <HintPath>$(ServerAssemblies)\Microsoft.TeamFoundation.WorkItemTracking.Server.DataServices.dll</HintPath>
         </Reference>
+        <!-- Server and Client version differs in 2017.2: must pick server -->
+        <Reference Include="Microsoft.VisualStudio.Services.WebApi, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <HintPath Condition="'$(TfsVersion)' == '15.2'">$(ServerAssemblies)\Microsoft.VisualStudio.Services.WebApi.dll</HintPath>
+          <HintPath Condition="'$(TfsVersion)' == '15.0'">$(HintPackageDir)\Microsoft.VisualStudio.Services.Client.15.112.1\lib\net45\Microsoft.VisualStudio.Services.WebApi.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
 
         <!-- Client Assemblies -->
         <Reference Include="ManyConsole, Version=0.4.2.20, Culture=neutral, processorArchitecture=MSIL">
@@ -197,10 +203,6 @@
           -->
           <Reference Include="Microsoft.VisualStudio.Services.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
             <HintPath>$(HintPackageDir)\Microsoft.VisualStudio.Services.Client.15.112.1\lib\net45\Microsoft.VisualStudio.Services.Common.dll</HintPath>
-            <Private>True</Private>
-          </Reference>
-          <Reference Include="Microsoft.VisualStudio.Services.WebApi, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-            <HintPath>$(HintPackageDir)\Microsoft.VisualStudio.Services.Client.15.112.1\lib\net45\Microsoft.VisualStudio.Services.WebApi.dll</HintPath>
             <Private>True</Private>
           </Reference>
           <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
