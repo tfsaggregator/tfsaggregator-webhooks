@@ -48,6 +48,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic">
+      <Private>True</Private>
+    </Reference>
     <!-- let TfsReferences.target pull in the proper stuff
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -125,6 +128,8 @@
     <Content Include="apiapp.json" />
     <None Include="app.config" />
     <Content Include="App_Data\HelloWorld.policies" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="README.md" />
     <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
     <None Include="Properties\PublishProfiles\AggregatorWebHooks-GiuliovDev.pubxml" />
