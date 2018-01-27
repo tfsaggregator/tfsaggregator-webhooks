@@ -58,6 +58,7 @@ namespace Aggregator.WebHooks.Models
                     // VSTS sprint 100 or so introduced the Account, but TFS 2015.3 stil lacks it
                     if (payload.SelectToken("resourceContainers.account") == null)
                     {
+                        // TFS
                         result.CollectionId = (string)payload["resourceContainers"]["collection"]["id"];
                     }
                     else
@@ -69,6 +70,11 @@ namespace Aggregator.WebHooks.Models
                 string fullUrl = (string)payload["resource"]["url"];
                 result.TfsCollectionUri = fullUrl.Substring(0, fullUrl.IndexOf("_apis"));
 
+                /* TODO
+                ["resource"]["fields"]["System.TeamProject"]
+                rules out using 'Minimal' for 'Resource detail to send'
+                search a solution!!!
+                */
                 switch (result.EventType)
                 {
                     case "workitem.created":
