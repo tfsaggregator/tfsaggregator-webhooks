@@ -33,7 +33,7 @@ namespace BasicAuthentication.Filters
                 return;
             }
 
-            if (String.IsNullOrEmpty(authorization.Parameter))
+            if (string.IsNullOrEmpty(authorization.Parameter))
             {
                 // Authentication was attempted but failed. Set ErrorResult to indicate an error.
                 context.ErrorResult = new AuthenticationFailureResult("Missing credentials", request);
@@ -66,7 +66,9 @@ namespace BasicAuthentication.Filters
             }
         }
 
-        protected abstract Task<IPrincipal> AuthenticateAsync(string userName, string password,
+        protected abstract Task<IPrincipal> AuthenticateAsync(
+            string userName,
+            string password,
             CancellationToken cancellationToken);
 
         private static Tuple<string, string> ExtractUserNameAndPassword(string authorizationParameter)
@@ -86,8 +88,10 @@ namespace BasicAuthentication.Filters
             // However, the current draft updated specification for HTTP 1.1 indicates this encoding is infrequently
             // used in practice and defines behavior only for ASCII.
             Encoding encoding = Encoding.ASCII;
+
             // Make a writable copy of the encoding to enable setting a decoder fallback.
             encoding = (Encoding)encoding.Clone();
+
             // Fail on invalid bytes rather than silently replacing and continuing.
             encoding.DecoderFallback = DecoderFallback.ExceptionFallback;
             string decodedCredentials;
@@ -101,7 +105,7 @@ namespace BasicAuthentication.Filters
                 return null;
             }
 
-            if (String.IsNullOrEmpty(decodedCredentials))
+            if (string.IsNullOrEmpty(decodedCredentials))
             {
                 return null;
             }
@@ -128,16 +132,7 @@ namespace BasicAuthentication.Filters
         {
             string parameter;
 
-            if (String.IsNullOrEmpty(Realm))
-            {
-                parameter = null;
-            }
-            else
-            {
-                // A correct implementation should verify that Realm does not contain a quote character unless properly
-                // escaped (precededed by a backslash that is not itself escaped).
-                parameter = "realm=\"" + Realm + "\"";
-            }
+            parameter = string.IsNullOrEmpty(Realm) ? null : "realm=\"" + Realm + "\"";
 
             context.ChallengeWith("Basic", parameter);
         }

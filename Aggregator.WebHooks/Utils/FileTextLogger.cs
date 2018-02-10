@@ -1,12 +1,8 @@
-﻿using Aggregator.Core.Monitoring;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-
-namespace Aggregator.WebHooks.Utils
+﻿namespace Aggregator.WebHooks.Utils
 {
+    using System.Diagnostics;
+    using Aggregator.Core.Monitoring;
+
     internal class FileTextLogger : ITextLogger
     {
         private readonly Stopwatch clock = new Stopwatch();
@@ -19,6 +15,7 @@ namespace Aggregator.WebHooks.Utils
         }
 
         public LogLevel MinimumLogLevel { get; set; }
+
         public string TextLogFile { get; private set; }
 
         public void Log(LogLevel level, string format, params object[] args)

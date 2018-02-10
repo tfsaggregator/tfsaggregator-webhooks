@@ -1,14 +1,14 @@
-﻿using Aggregator.Core.Monitoring;
-using Aggregator.WebHooks.Utils;
-using BasicAuthentication.Filters;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web.Http;
-
-namespace Aggregator.WebHooks
+﻿namespace Aggregator.WebHooks
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Web.Http;
+    using Aggregator.Core.Monitoring;
+    using Aggregator.WebHooks.Utils;
+    using BasicAuthentication.Filters;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -32,7 +32,9 @@ namespace Aggregator.WebHooks
         private static LogLevel GetDefaultLoggingLevel()
         {
             var defaultLoggingLevelAsString = ConfigurationManager.AppSettings["DefaultLoggingLevel"];
+#pragma warning disable S1854 // Dead stores should be removed
             var defaultLoggingLevel = LogLevel.Normal;
+#pragma warning restore S1854 // Dead stores should be removed
             Enum.TryParse<LogLevel>(defaultLoggingLevelAsString, true, out defaultLoggingLevel);
             return defaultLoggingLevel;
         }

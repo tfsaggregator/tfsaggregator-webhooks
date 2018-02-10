@@ -1,11 +1,7 @@
-﻿using Aggregator.Core.Monitoring;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Aggregator.WebHooks.Utils
+﻿namespace Aggregator.WebHooks.Utils
 {
+    using Aggregator.Core.Monitoring;
+
     internal class AspNetEventLogger : TextLogComposer, ILogEvents2
     {
         /// <summary>
