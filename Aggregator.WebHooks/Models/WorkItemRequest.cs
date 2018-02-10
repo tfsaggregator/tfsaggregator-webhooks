@@ -38,6 +38,9 @@ namespace Aggregator.WebHooks.Models
         {
             var result = new WorkItemRequest();
 
+            try
+            {
+
             if (payload.Property("eventType") == null)
             {
                 result.Error = $"Could not determine event type for message: {payload}";
@@ -103,6 +106,13 @@ namespace Aggregator.WebHooks.Models
                 }//switch
 
             }//if
+
+            }
+            catch (Exception e)
+            {
+                result.Error = $"Failed to parse incoming notification from TFS/VSTS. {e.Message}";
+            }
+
             return result;
         }
     }
