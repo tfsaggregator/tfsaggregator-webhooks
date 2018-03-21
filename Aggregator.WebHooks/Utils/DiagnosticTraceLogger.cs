@@ -1,12 +1,8 @@
-﻿using Aggregator.Core.Monitoring;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-
-namespace Aggregator.WebHooks.Utils
+﻿namespace Aggregator.WebHooks.Utils
 {
+    using System.Diagnostics;
+    using Aggregator.Core.Monitoring;
+
     internal class DiagnosticTraceLogger : ITextLogger
     {
         private readonly Stopwatch clock = new Stopwatch();
@@ -19,6 +15,7 @@ namespace Aggregator.WebHooks.Utils
         }
 
         public LogLevel MinimumLogLevel { get; set; }
+
         public string CorrelationId { get; private set; }
 
         public void Log(LogLevel level, string format, params object[] args)
@@ -45,6 +42,7 @@ namespace Aggregator.WebHooks.Utils
                         this.CorrelationId,
                         message);
 
+#pragma warning disable S1871 // Either merge this case with the identical one on line "59" or change one of the implementations.
                 switch (level)
                 {
                     case LogLevel.Critical:
@@ -69,7 +67,7 @@ namespace Aggregator.WebHooks.Utils
                         System.Diagnostics.Trace.WriteLine(traceMessage);
                         break;
                 }
-                
+#pragma warning restore S1871 // Either merge this case with the identical one on line "59" or change one of the implementations.
             }
             finally
             {

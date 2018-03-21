@@ -183,3 +183,5 @@ _collect/
 wip.playlist
 /.cr
 unversioned/
+deploy/
+PublishOutput/

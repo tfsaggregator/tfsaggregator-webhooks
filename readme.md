@@ -7,7 +7,7 @@ You can reuse the existing Rules with minimal changes.
 Try it now 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
-> This is still a beta version, please provide feedback to the team!
+> **Note** The above button does not work on branches with a slash (`/`) in name e.g. `release/2.3`.
 
 ## Example Uses
 

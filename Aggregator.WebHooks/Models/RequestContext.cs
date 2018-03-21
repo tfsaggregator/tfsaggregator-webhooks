@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Linq;
-
-using Aggregator.Core;
-using Aggregator.Core.Facade;
 using Aggregator.Core.Interfaces;
-
-using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
-using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Framework.Server;
-using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.Server.Core;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
 
 namespace Aggregator.Models
 {
@@ -57,17 +47,17 @@ namespace Aggregator.Models
         {
             get
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("Cannot emulate IVssRequestContext in remote web service");
             }
         }
 
-        public string GetProjectName(Uri projectUri)
+        public string GetProjectName(Uri teamProjectUri)
         {
             // no need to compute from URI
             return this.teamProjectName;
         }
 
-        public IProjectProperty[] GetProjectProperties(Uri projectUri)
+        public IProjectProperty[] GetProjectProperties(Uri teamProjectUri)
         {
             // TODO maybe one day we will implement...
             throw new NotImplementedException();

@@ -1,33 +1,32 @@
-﻿using Aggregator.Core;
-using Aggregator.Core.Context;
-using Aggregator.Core.Monitoring;
-using Aggregator.Models;
-using Aggregator.WebHooks.Models;
-using Aggregator.WebHooks.Utils;
-using BasicAuthentication.Filters;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-
-namespace Aggregator.WebHooks.Controllers
+﻿namespace Aggregator.WebHooks.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Web.Http;
+    using Aggregator.Core;
+    using Aggregator.Core.Context;
+    using Aggregator.Core.Monitoring;
+    using Aggregator.Models;
+    using Aggregator.WebHooks.Models;
+    using Aggregator.WebHooks.Utils;
+    using BasicAuthentication.Filters;
+    using Newtonsoft.Json.Linq;
+
     public class WorkItemController : ApiController
     {
         public HttpResponseMessage Get()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new StringContent($"Hello from TFSAggregator2webHooks @{Environment.MachineName}");
+            response.Content = new StringContent($"Hello from TFS Aggregator Web Service, running on {Environment.MachineName}");
             return response;
         }
 
         // TODO async
-	    [IdentityBasicAuthentication] // Enable authentication via an ASP.NET Identity user name and password
-	    [Authorize] // Require some form of authentication
+        [Authorize] // Require some form of authentication
         public HttpResponseMessage Post([FromBody]JObject payload)
         {
             var request = WorkItemRequest.Parse(payload);
@@ -39,12 +38,13 @@ namespace Aggregator.WebHooks.Controllers
             }
 
             string policyFilePath = System.Configuration.ConfigurationManager.AppSettings["policyFilePath"];
+
             // macro expansion to permit multi-tenants
             string policyFile = policyFilePath.WithVar(request);
 
             // cache requires absolute path
             policyFile = System.Web.Hosting.HostingEnvironment.MapPath(policyFile);
-            Debug.Assert(System.IO.File.Exists(policyFile));
+            Debug.Assert(System.IO.File.Exists(policyFile), "Policy file not found.");
 
             // need a logger to show errors in config file (Catch 22)
             var logger = new AspNetEventLogger(request.EventId, LogLevel.Normal);
@@ -74,14 +74,12 @@ namespace Aggregator.WebHooks.Controllers
                     var result = eventProcessor.ProcessEvent(context, notification);
                     logger.ProcessingCompleted(result);
 
-                    if (result.StatusCode == 0)
-                    {
-                        return new HttpResponseMessage(HttpStatusCode.OK);
-                    }
-                    else
-                    {
-                        return new HttpResponseMessage(HttpStatusCode.InternalServerError) { ReasonPhrase = result.StatusMessage };
-                    }
+                    return result.StatusCode == 0
+                        ? new HttpResponseMessage(HttpStatusCode.OK)
+                        : new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                            {
+                                ReasonPhrase = result.StatusMessage
+                            };
                 }//using
             }
             catch (Exception e)

@@ -1,11 +1,7 @@
-﻿using Aggregator.Core.Interfaces;
-using Microsoft.TeamFoundation.Client;
-using Microsoft.TeamFoundation.Server;
-using System;
-using System.Linq;
-
-namespace Aggregator.Models
+﻿namespace Aggregator.Models
 {
+    using Aggregator.Core.Interfaces;
+
     /// <summary>
     /// Notification implementation for the Console Application
     /// </summary>
@@ -27,8 +23,9 @@ namespace Aggregator.Models
         {
             this.WorkItemId = workItemId;
             this.ChangeType = changeType;
+
             //HACK
-            this.ProjectUri = teamProjectCollectionUrl + "/" +projectName;
+            this.ProjectUri = teamProjectCollectionUrl + "/" + projectName;
         }
 
         public ChangeTypes ChangeType { get; private set; }
