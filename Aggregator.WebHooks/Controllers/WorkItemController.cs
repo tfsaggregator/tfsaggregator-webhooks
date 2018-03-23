@@ -49,6 +49,13 @@
             // need a logger to show errors in config file (Catch 22)
             var logger = new AspNetEventLogger(request.EventId, LogLevel.Normal);
 
+            bool IgnoreCertificateErrors = true;
+            if (IgnoreCertificateErrors)
+            {
+                ServicePointManager.ServerCertificateValidationCallback +=
+                    (sender, cert, chain, sslPolicyErrors) => true;
+            }
+
             var context = new RequestContext(request.TfsCollectionUri, request.TeamProject);
             var runtime = RuntimeContext.GetContext(
                 () => policyFile,
@@ -87,7 +94,8 @@
                 logger.ProcessEventException(e);
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
-                    ReasonPhrase = e.Message
+                    // stop at first newline
+                    ReasonPhrase = e.Message.Substring(0, e.Message.IndexOf(Environment.NewLine) > 0 ? e.Message.IndexOf(Environment.NewLine) : e.Message.Length)
                 };
             }//try
         }
