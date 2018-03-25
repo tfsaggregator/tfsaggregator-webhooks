@@ -85,10 +85,15 @@
             catch (Exception e)
             {
                 logger.ProcessEventException(e);
+                // stop at first newline
+                string firstLineOfErrorMessage = e.Message
+                    .Substring(0,
+                        e.Message.IndexOf(Environment.NewLine) > 0
+                            ? e.Message.IndexOf(Environment.NewLine)
+                            : e.Message.Length);
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
-                    // stop at first newline
-                    ReasonPhrase = e.Message.Substring(0, e.Message.IndexOf(Environment.NewLine) > 0 ? e.Message.IndexOf(Environment.NewLine) : e.Message.Length)
+                    ReasonPhrase = firstLineOfErrorMessage
                 };
             }//try
         }

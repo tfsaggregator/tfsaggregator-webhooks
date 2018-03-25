@@ -43,19 +43,15 @@ namespace UnitTest.WebHooks
         }
 
         [TestMethod]
-        public void Updated_Minimal_None_NoneˆFailsOnProjectName()
+        public void Updated_Minimal_None_NoneˆFails()
         {
             var payload = GetDataFileMatchingCallerName();
 
             var request = WorkItemRequest.Parse(payload);
 
             Assert.IsNotNull(request);
-            Assert.IsTrue(request.IsValid);
-            Assert.AreEqual(ChangeTypes.Change, request.ChangeType);
-            Assert.AreEqual("1fe04a90-6116-437a-a208-f64a7711e8ff", request.CollectionId);
-            Assert.AreEqual("https://giuliovaad.visualstudio.com/", request.TfsCollectionUri);
-            Assert.AreEqual(14, request.WorkItemId);
-            Assert.AreNotEqual("WorkItemTracking", request.TeamProject);
+            Assert.IsFalse(request.IsValid);
+            Assert.AreEqual("TFS Aggregator requires 'All' for 'Resource details to send'.", request.Error);
         }
     }
 }

@@ -41,7 +41,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParsePayload-TFS.cs" />
+    <Compile Include="ParsePayload-TFS2017-3-1.cs" />
+    <Compile Include="ParsePayload-TFS2018.cs" />
     <Compile Include="ParsePayload-VSTS.cs" />
     <Compile Include="PayloadBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

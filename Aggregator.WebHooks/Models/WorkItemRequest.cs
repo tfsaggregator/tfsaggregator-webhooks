@@ -100,36 +100,62 @@ namespace Aggregator.WebHooks.Models
                     result.TeamProjectUri = (string)payload["resourceContainers"]["project"]["baseUrl"];
                     // not always true...
                     result.WorkItemId = (int)payload["resource"]["id"];
+
                     /* TODO
                     ["resource"]["fields"]["System.TeamProject"]
                     rules out using 'Minimal' for 'Resource detail to send'
                     search a solution!!!
                     */
-                    if (payload.SelectToken("resource.fields") != null)
-                    {
-                        // this is an ALL payload
-                        result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
-                    }
-
                     switch (result.EventType)
                     {
                         case "workitem.created":
                             result.ChangeType = Core.Interfaces.ChangeTypes.New;
-                            break;
-                        case "workitem.updated":
-                            result.WorkItemId = (int)payload["resource"]["workItemId"];
                             if (payload.SelectToken("resource.fields") != null)
                             {
-                                // this is an ALL payload
+                                // this requires an ALL payload
+                                result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
+                            }
+                            else
+                            {
+                                result.Error = $"TFS Aggregator requires 'All' for 'Resource details to send'.";
+                            }
+                            break;
+                        case "workitem.updated":
+                            result.ChangeType = Core.Interfaces.ChangeTypes.Change;
+                            result.WorkItemId = (int)payload["resource"]["workItemId"];
+                            if (payload.SelectToken("resource.revision.fields") != null)
+                            {
+                                // this requires an ALL payload
                                 result.TeamProject = (string)payload["resource"]["revision"]["fields"]["System.TeamProject"];
                             }
-                            result.ChangeType = Core.Interfaces.ChangeTypes.Change;
+                            else
+                            {
+                                result.Error = $"TFS Aggregator requires 'All' for 'Resource details to send'.";
+                            }
                             break;
                         case "workitem.restored":
                             result.ChangeType = Core.Interfaces.ChangeTypes.Restore;
+                            if (payload.SelectToken("resource.fields") != null)
+                            {
+                                // this requires an ALL payload
+                                result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
+                            }
+                            else
+                            {
+                                result.Error = $"TFS Aggregator requires 'All' for 'Resource details to send'.";
+                            }
                             break;
                         case "workitem.deleted":
                             result.ChangeType = Core.Interfaces.ChangeTypes.Delete;
+                            if (payload.SelectToken("resource.fields") != null)
+                            {
+                                // this requires an ALL payload
+                                result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
+                            }
+                            else
+                            {
+                                result.Error = $"TFS Aggregator requires 'All' for 'Resource details to send'.";
+                            }
                             break;
                         //TODO case "workitem.comment":
                         default:
