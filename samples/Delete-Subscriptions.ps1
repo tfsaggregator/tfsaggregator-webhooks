@@ -1,9 +1,12 @@
 param (
   # source TFS/VSTS
-  $tfsURL,
-  $PersonalAccessToken,
+  [Parameter(Mandatory=$true)] 
+  [string] $tfsURL,
+  [Parameter(Mandatory=$true)] 
+  [string] $PersonalAccessToken,
   # destination TFS Aggregator
-  $aggregatorURL
+  [Parameter(Mandatory=$true)] 
+  [string] $aggregatorURL
 )
 
 $basicAuth = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("tfsaggregator:${PersonalAccessToken}"))

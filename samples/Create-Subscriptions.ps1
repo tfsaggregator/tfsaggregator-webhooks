@@ -1,12 +1,18 @@
 param (
   # source TFS/VSTS
-  $tfsURL,
-  $ProjectName,
-  $PersonalAccessToken,
+  [Parameter(Mandatory=$true)] 
+  [string] $tfsURL,
+  [Parameter(Mandatory=$true)] 
+  [string] $ProjectName,
+  [Parameter(Mandatory=$true)] 
+  [string] $PersonalAccessToken,
   # destination TFS Aggregator
-  $aggregatorURL,
-  $aggregatorUsername,
-  $aggregatorPassword
+  [Parameter(Mandatory=$true)] 
+  [string] $aggregatorURL,
+  [Parameter(Mandatory=$true)] 
+  [string] $aggregatorUsername,
+  [Parameter(Mandatory=$true)] 
+  [string] $aggregatorPassword
 )
 
 
@@ -67,6 +73,7 @@ $response = Invoke-RestMethod -Uri "${tfsURL}/_apis/hooks/subscriptions?${APIver
 
 # workitem.deleted always fail with
 # TF26198: The work item does not exist, or you do not have permission to access it.
+#>
 
 $request = @"
 {
@@ -88,7 +95,6 @@ $request = @"
 }
 "@
 $response = Invoke-RestMethod -Uri "${tfsURL}/_apis/hooks/subscriptions?${APIversion}" -Method Post -Body $request -ContentType "application/json" -Headers $headers -Insecure
-#>
 
 $request = @"
 {
