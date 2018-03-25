@@ -1,4 +1,6 @@
-﻿namespace Aggregator.WebHooks.Models
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UnitTest.WebHooks")]
+
+namespace Aggregator.WebHooks.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,27 +20,33 @@
             }
         }
 
-        internal string Error { get; private set; }
+        internal string Error { get; set; }
 
         // real data
-        internal string EventId { get; private set; }
+        internal string EventId { get; set; }
 
-        internal string EventType { get; private set; }
+        internal string EventType { get; set; }
 
         // EventType property decoded
-        internal ChangeTypes ChangeType { get; private set; }
+        internal ChangeTypes ChangeType { get; set; }
 
-        internal string AccountId { get; private set; }
+        internal string AccountId { get; set; }
 
-        public string CollectionId { get; private set; }
+        internal string CollectionId { get; set; }
 
-        internal int WorkItemId { get; private set; }
+        internal int WorkItemId { get; set; }
 
-        internal string TeamProject { get; private set; }
+        internal string TeamProject { get; set; }
 
-        internal string TfsCollectionUri { get; private set; }
+        internal string TfsCollectionUri { get; set; }
 
-        private WorkItemRequest()
+        internal string TeamProjectUri { get; set; }
+
+        internal string ProjectId { get; set; }
+
+        internal string SchemaVersion { get; set; }
+
+        protected WorkItemRequest()
         {
             this.Error = string.Empty;
         }
@@ -67,56 +75,76 @@
                     else
                     {
                         // VSTS sprint 100 or so introduced the Account, but TFS 2015.3 stil lacks it
-                        if (payload.SelectToken("resourceContainers.account") == null)
-                        {
-                            // TFS
-                            result.CollectionId = (string)payload["resourceContainers"]["collection"]["id"];
-                        }
-                        else
+                        if (payload.SelectToken("resourceContainers.account") != null)
                         {
                             result.AccountId = (string)payload["resourceContainers"]["account"]["id"];
                         }
                     }
 
-                    string fullUrl = (string)payload["resource"]["url"];
-                    result.TfsCollectionUri = fullUrl.Substring(0, fullUrl.IndexOf("_apis"));
+                    if (payload.Property("resourceVersion") == null)
+                    {
+                        result.Error = $"Missing resourceVersion data.";
+                    }
+                    else
+                    {
+                        result.SchemaVersion = (string)payload["resourceVersion"];
+                        if (result.SchemaVersion != "1.0")
+                        {
+                            result.Error = $"Unsupported resourceVersion '{result.SchemaVersion}'.";
+                        }
+                    }
 
+                    result.CollectionId = (string)payload["resourceContainers"]["collection"]["id"];
+                    result.TfsCollectionUri = (string)payload["resourceContainers"]["collection"]["baseUrl"];
+                    result.ProjectId = (string)payload["resourceContainers"]["project"]["id"];
+                    result.TeamProjectUri = (string)payload["resourceContainers"]["project"]["baseUrl"];
+                    // not always true...
+                    result.WorkItemId = (int)payload["resource"]["id"];
                     /* TODO
                     ["resource"]["fields"]["System.TeamProject"]
                     rules out using 'Minimal' for 'Resource detail to send'
                     search a solution!!!
                     */
+                    if (payload.SelectToken("resource.fields") != null)
+                    {
+                        // this is an ALL payload
+                        result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
+                    }
+
                     switch (result.EventType)
                     {
                         case "workitem.created":
-                            result.WorkItemId = (int)payload["resource"]["id"];
-                            result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
                             result.ChangeType = Core.Interfaces.ChangeTypes.New;
                             break;
                         case "workitem.updated":
                             result.WorkItemId = (int)payload["resource"]["workItemId"];
-                            result.TeamProject = (string)payload["resource"]["revision"]["fields"]["System.TeamProject"];
+                            if (payload.SelectToken("resource.fields") != null)
+                            {
+                                // this is an ALL payload
+                                result.TeamProject = (string)payload["resource"]["revision"]["fields"]["System.TeamProject"];
+                            }
                             result.ChangeType = Core.Interfaces.ChangeTypes.Change;
                             break;
                         case "workitem.restored":
-                            result.WorkItemId = (int)payload["resource"]["id"];
-                            result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
                             result.ChangeType = Core.Interfaces.ChangeTypes.Restore;
                             break;
                         case "workitem.deleted":
-                            result.WorkItemId = (int)payload["resource"]["id"];
-                            result.TeamProject = (string)payload["resource"]["fields"]["System.TeamProject"];
                             result.ChangeType = Core.Interfaces.ChangeTypes.Delete;
                             break;
+                        //TODO case "workitem.comment":
                         default:
                             result.Error = $"Unsupported eventType {result.EventType}";
                             break;
                     }//switch
+
                 }//if
             }
             catch (Exception e)
             {
-                result.Error = $"Failed to parse incoming notification from TFS/VSTS. {e.Message}";
+                if (string.IsNullOrEmpty(result.Error))
+                {
+                    result.Error = $"Failed to parse incoming notification from TFS/VSTS. {e.Message}";
+                }
             }
 
             return result;
