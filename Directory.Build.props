@@ -1,7 +1,6 @@
 <Project>
   <PropertyGroup>
-    <DevelopmentTfsVersion>2018</DevelopmentTfsVersion>
-    <TfsVersion Condition="'$(TfsVersion)' == ''">$(DevelopmentTfsVersion)</TfsVersion>
+    <TfsVersion>2018</TfsVersion>
     <AssemblyVersion Condition="'$(MajorMinorPatch)' != ''">$(MajorMinorPatch)</AssemblyVersion>
     <AssemblyFileVersion Condition="'$(MajorMinorPatch)' != ''">$(MajorMinorPatch)</AssemblyFileVersion>
     <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">0.0.0.1</AssemblyVersion>
@@ -11,6 +10,9 @@
     <Copyright>Copyright (c) TFS Aggregator Team 2015-18</Copyright>
     <!-- use custom configuration attribute -->
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <IsWebHooks>true</IsWebHooks>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <KnownTfsVersion Include="2013"   />
