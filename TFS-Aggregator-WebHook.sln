@@ -22,12 +22,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E0E7919C-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "references", "references", "{6D32EAB0-0194-408F-91EB-B2E2E0125C3E}"
 	ProjectSection(SolutionItems) = preProject
-		References\Microsoft.TeamFoundation.Framework.Server.dll = References\Microsoft.TeamFoundation.Framework.Server.dll
-		References\Microsoft.TeamFoundation.Server.Core.dll = References\Microsoft.TeamFoundation.Server.Core.dll
-		References\Microsoft.TeamFoundation.WorkItemTracking.Server.DataAccessLayer.dll = References\Microsoft.TeamFoundation.WorkItemTracking.Server.DataAccessLayer.dll
-		References\Microsoft.TeamFoundation.WorkItemTracking.Server.DataServices.dll = References\Microsoft.TeamFoundation.WorkItemTracking.Server.DataServices.dll
-		References\Microsoft.TeamFoundation.WorkItemTracking.Server.dll = References\Microsoft.TeamFoundation.WorkItemTracking.Server.dll
-		References\TfsReferences.target = References\TfsReferences.target
+		References\2018\config.targets = References\2018\config.targets
+		References\2018\Microsoft.TeamFoundation.Common.dll = References\2018\Microsoft.TeamFoundation.Common.dll
+		References\2018\Microsoft.TeamFoundation.Framework.Server.dll = References\2018\Microsoft.TeamFoundation.Framework.Server.dll
+		References\2018\Microsoft.TeamFoundation.Server.Core.dll = References\2018\Microsoft.TeamFoundation.Server.Core.dll
+		References\2018\Microsoft.TeamFoundation.Server.Types.dll = References\2018\Microsoft.TeamFoundation.Server.Types.dll
+		References\2018\Microsoft.TeamFoundation.WorkItemTracking.Server.Dataaccesslayer.dll = References\2018\Microsoft.TeamFoundation.WorkItemTracking.Server.Dataaccesslayer.dll
+		References\2018\Microsoft.TeamFoundation.WorkItemTracking.Server.DataServices.dll = References\2018\Microsoft.TeamFoundation.WorkItemTracking.Server.DataServices.dll
+		References\2018\Microsoft.TeamFoundation.WorkItemTracking.Server.dll = References\2018\Microsoft.TeamFoundation.WorkItemTracking.Server.dll
+		References\2018\PLACEHOLDER.txt = References\2018\PLACEHOLDER.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4EA36F79-382E-479C-9717-26F2292D1D72}"
@@ -78,7 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{8B9F08
 		InstallOnPremises.ps1 = InstallOnPremises.ps1
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggregator.Core.WebHooks", "Aggregator.Core\Aggregator.Core.Plugin\Aggregator.Core.WebHooks.csproj", "{FEA76835-61B3-4FC7-9D6F-50D39A7A8258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggregator.Core", "Aggregator.Core\Aggregator.Core\Aggregator.Core.csproj", "{FEA76835-61B3-4FC7-9D6F-50D39A7A8258}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.WebHooks", "UnitTest.WebHooks\UnitTest.WebHooks.csproj", "{CFA9AD3A-6C83-4746-B9BB-5A18070DB847}"
 EndProject

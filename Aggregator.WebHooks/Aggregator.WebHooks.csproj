@@ -136,9 +136,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Aggregator.Core\Aggregator.Core.Plugin\Aggregator.Core.WebHooks.csproj">
+    <ProjectReference Include="..\Aggregator.Core\Aggregator.Core\Aggregator.Core.csproj">
       <Project>{fea76835-61b3-4fc7-9d6f-50d39a7a8258}</Project>
-      <Name>Aggregator.Core.WebHooks</Name>
+      <Name>Aggregator.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
