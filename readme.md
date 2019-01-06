@@ -1,11 +1,10 @@
-![Build badge](https://tfsaggregator.visualstudio.com/_apis/public/build/definitions/2e747373-c780-4b2c-823d-98a3fd2b4e99/9/badge)
+# This repository is no longer being used. 
+The TFS Aggregator Webhooks solution has been merged back into [the tfsaggregator solution](https://github.com/tfsaggregator/tfsaggregator/tree/develop).
 
+# TFS Aggregator Webhooks.
 This is an alternative version of TFS Aggregator that supports [Visual Studio Team Services (VSTS)](https://www.visualstudio.com/team-services/).
 It can be used on premises also, starting from TFS 2015: you have to provide the hosting environment.
 You can reuse the existing Rules with minimal changes.
-
-Try it now 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
 > This is still a beta version, please provide feedback to the team!
 
